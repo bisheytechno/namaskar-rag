@@ -1,6 +1,6 @@
-# Namaskar RAG
+# Namaskar RAG 🧠
 
-Learning Retrieval-Augmented Generation (RAG) using Python and ChromaDB — a step toward AI engineering.
+Learning Retrieval-Augmented Generation (RAG) using Python and ChromaDB — a foundation for AI engineering.
 
 ---
 
@@ -11,7 +11,7 @@ Learning Retrieval-Augmented Generation (RAG) using Python and ChromaDB — a st
 - Persistent storage — save data using ChromaDB
 - Semantic search — retrieve relevant documents
 - Distance inspection — analyze retrieval results
-- RAG fundamentals — understand the retrieval stage
+- Context building — combine retrieved documents into a single context string
 
 ---
 
@@ -30,11 +30,12 @@ Learning Retrieval-Augmented Generation (RAG) using Python and ChromaDB — a st
 ```text
 namaskar-rag/
 │
-├── myvenv/                 → Virtual environment (local)
-├── rag_db/                 → Auto-generated persistent database
-├── knowledge_base.py       → Knowledge-base documents
-├── 01_indexing.py          → Index documents in ChromaDB
-├── 02_retrieval.py         → Semantic search and distances
+├── myvenv/                    → Virtual environment (local)
+├── rag_db/                    → Auto-generated persistent database
+├── knowledge_base.py           → Knowledge-base documents
+├── 01_indexing.py              → Index documents in ChromaDB
+├── 02_retrieval.py             → Semantic search and distances
+├── 03_context_building.py      → Build context from retrieved documents
 ├── requirements.txt
 ├── .gitignore
 └── README.md
@@ -51,14 +52,14 @@ git clone https://github.com/bisheytechno/namaskar-rag.git
 cd namaskar-rag
 ```
 
-**2. Virtual Environment:**
+**2. Create a Virtual Environment:**
 
 ```bash
 python -m venv myvenv
 myvenv\Scripts\activate
 ```
 
-**3. Install:**
+**3. Install Dependencies:**
 
 ```bash
 pip install -r requirements.txt
@@ -76,21 +77,29 @@ python 01_indexing.py
 python 02_retrieval.py
 ```
 
+**6. Build Context:**
+
+```bash
+python 03_context_building.py
+```
+
 ---
 
 ## Key Concepts
 
 | Concept | What it does |
 |---------|-------------|
-| Embeddings | Represent text as numerical vectors |
-| `PersistentClient()` | Store database data on disk |
-| `get_or_create_collection()` | Get an existing collection or create one |
-| `collection.add()` | Add documents to a collection |
-| `collection.query()` | Retrieve similar documents |
-| `query_texts` | Specify text queries for search |
-| `n_results` | Set the requested number of results |
-| `metadatas` | Store extra information with documents |
-| `distances` | Inspect distances between query and retrieved vectors |
+| `SentenceTransformerEmbeddingFunction()` | Configures the text embedding function |
+| `PersistentClient()` | Stores database data on disk |
+| `get_or_create_collection()` | Gets an existing collection or creates one |
+| `collection.add()` | Adds documents to a collection |
+| `collection.query()` | Retrieves similar documents |
+| `query_texts` | Specifies text queries for search |
+| `n_results` | Sets the requested number of results |
+| `metadatas` | Stores extra information with documents |
+| `distances` | Provides distances for retrieved results |
+| `enumerate()` | Iterates over items with their indices |
+| `"\n\n".join(documents)` | Combines document strings with blank lines |
 
 ---
 
@@ -108,6 +117,24 @@ User Query → Query Embedding → Semantic Search
 
 ---
 
+## Context Building
+
+```text
+User Query
+    ↓
+ChromaDB Retrieval
+    ↓
+Retrieved Documents
+    ↓
+Combine Documents Using join()
+    ↓
+Single Context String
+```
+
+The retrieved documents are combined into one text string that can later be provided to a language model as context.
+
+---
+
 ## RAG Pipeline
 
 ```text
@@ -117,7 +144,7 @@ Results   → Build Context → Send to LLM
 LLM       → Generate Answer
 ```
 
-*Note: The current project implements indexing and retrieval. Context building and LLM answer generation are planned next steps.*
+**Current progress:** Document indexing, semantic retrieval, distance inspection, and context building have been implemented as separate scripts. LLM integration and final answer generation are the next steps.
 
 ---
 
