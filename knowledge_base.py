@@ -12,4 +12,5 @@ DOCUMENTS = [
     "Transformers are neural network architectures used in modern LLMs like GPT and Claude.",
     "Fine-tuning is the process of training a pre-trained model on specific data.",
     "Docker is a tool for containerizing applications for easy deployment.",
+    "Python is a programming language"
 ]
